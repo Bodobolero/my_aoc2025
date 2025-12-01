@@ -21,7 +21,7 @@ cargo bench day01
 
 | day  |  part1 |  part2 |
 | :----|-------:|-------:|
-| day01|  xxx µs | xxx µs |
+| day01|   97 µs | 98 µs |
 | day02|  xxx µs | xxx µs |
 | day03|  xxx µs | xxx µs |
 | day04|  xxx µs | xxx µs |
