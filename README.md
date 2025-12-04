@@ -24,7 +24,7 @@ cargo bench day01
 | day01|   98 µs |   99 µs |
 | day02|    3 µs | 1877 µs |
 | day03|   31 µs |   68 µs |
-| day04|  xxx µs |  xxx µs |
+| day04|  155 µs | 1585 µs |
 | day05|  xxx µs |  xxx µs |
 | day06|  xxx µs |  xxx µs |
 | day07|  xxx µs |  xxx µs |
