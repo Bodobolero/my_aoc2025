@@ -24,8 +24,8 @@ cargo bench day01
 | day01|   98 µs |   99 µs |
 | day02|    3 µs | 1877 µs |
 | day03|   31 µs |   68 µs |
-| day04|  155 µs | 1585 µs |
-| day05|  xxx µs |  xxx µs |
+| day04|  145 µs | 1500 µs |
+| day05|  119 µs |   18 µs |
 | day06|  xxx µs |  xxx µs |
 | day07|  xxx µs |  xxx µs |
 | day08|  xxx µs |  xxx µs |
@@ -79,5 +79,31 @@ day03_part2             time:   [68.226 µs 68.402 µs 68.582 µs]
 Found 4 outliers among 100 measurements (4.00%)
   4 (4.00%) high mild
 
+     Running benches/benchmark.rs (target/release/deps/benchmark-c84cec2f19a55fbf)
+Gnuplot not found, using plotters backend
+day04_part1             time:   [143.26 µs 145.37 µs 147.41 µs]
+                        change: [−3.1389% −0.8811% +1.4632%] (p = 0.45 > 0.05)
+                        No change in performance detected.
+Found 4 outliers among 100 measurements (4.00%)
+  4 (4.00%) low mild
+
+Benchmarking day04_part2: Warming up for 3.0000 s
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 7.6s, enable flat sampling, or reduce sample count to 50.
+day04_part2             time:   [1.4948 ms 1.4998 ms 1.5049 ms]
+                        change: [−5.9877% −5.5774% −5.1936%] (p = 0.00 < 0.05)
+                        Performance has improved.
+
+     Running benches/benchmark.rs (target/release/deps/benchmark-c84cec2f19a55fbf)
+Gnuplot not found, using plotters backend
+day05_part1             time:   [118.49 µs 118.71 µs 118.94 µs]
+Found 5 outliers among 100 measurements (5.00%)
+  4 (4.00%) high mild
+  1 (1.00%) high severe
+
+day05_part2             time:   [17.800 µs 17.806 µs 17.813 µs]
+Found 8 outliers among 100 measurements (8.00%)
+  2 (2.00%) low mild
+  2 (2.00%) high mild
+  4 (4.00%) high severe
 
 ```
