@@ -1,8 +1,10 @@
 # copyright Frank Neumann 2025
 import time
-start=time.perf_counter()
+
 with open("input07.txt") as f:
     input = f.readlines()
+# start measurement after reading input because in Rust we read input at compile time
+start=time.perf_counter()
 input = [[y for y in x.strip()] for x in input]
 ways = [[0] * len(input[0]) for x in input]
 
