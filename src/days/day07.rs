@@ -39,7 +39,7 @@ pub fn part2() -> usize {
         .map(|l| l.as_bytes().to_vec()) // now you own the bytes
         .collect::<Vec<Vec<u8>>>();
     let mut worlds: Vec<Vec<usize>> = vec![vec![0; linevec[0].len()]; linevec.len()];
-
+    // recursive solution from a friend - not mine - but same speed as my original loop-based solution
     fn move_beam(
         ys: usize,
         xs: i32,
