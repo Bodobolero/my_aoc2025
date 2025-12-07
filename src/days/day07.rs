@@ -58,15 +58,15 @@ pub fn part2() -> usize {
                 linevec[ys][x] = b'|';
                 let w = move_beam(ys + 1, xs, linevec, worlds);
                 worlds[ys][x] = w;
-                return w;
+                w
             }
             b'^' => {
                 let w1 = move_beam(ys + 1, xs - 1, linevec, worlds);
                 let w2 = move_beam(ys + 1, xs + 1, linevec, worlds);
                 //worlds[ys][x] = w1 + w2;
-                return w1 + w2;
+                w1 + w2
             }
-            b'|' => return worlds[ys][x],
+            b'|' => worlds[ys][x],
             _ => panic!("unexpected symbol {}", linevec[ys][x]),
         }
     }
