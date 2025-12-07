@@ -27,20 +27,27 @@ cargo bench day01
 | day04|  145 µs | 1500 µs |
 | day05|  119 µs |   18 µs |
 | day06|  133 µs |   27 µs |
-| day07|   34 µs |   61 µs |
+| day07|   34 µs |   61 µs | 
 | day08|  xxx µs |  xxx µs |
 | day09|  xxx µs |  xxx µs |
 | day10|  xxx µs |  xxx µs |
 | day11|  xxx µs |  xxx µs |
 | day12|  xxx µs |  xxx µs |
 
+(Python day07 part2, same solution: 1941 microseconds = 32 times slower than Rust)
 
 ## Benchmark details
 
 Macbook Pro M1 Pro
 Apple M1 Pro, 16 GB RAM
 
+```bash
+rustc --version
+rustc 1.93.0-nightly (20383c9f1 2025-11-03)
 ```
+
+
+```bash
 Running benches/benchmark.rs (target/release/deps/benchmark-b717763455b967e0)
 Gnuplot not found, using plotters backend
 day01_part1             time:   [97.499 µs 97.652 µs 97.818 µs]
