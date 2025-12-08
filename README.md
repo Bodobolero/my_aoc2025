@@ -28,7 +28,7 @@ cargo bench day01
 | day05|  119 µs |   18 µs |
 | day06|  133 µs |   27 µs |
 | day07|   34 µs |   61 µs | 
-| day08|  xxx µs |  xxx µs |
+| day08| 4681 µs |25321 µs |
 | day09|  xxx µs |  xxx µs |
 | day10|  xxx µs |  xxx µs |
 | day11|  xxx µs |  xxx µs |
@@ -148,6 +148,19 @@ day07_part2             time:   [61.036 µs 61.190 µs 61.363 µs]
                         Performance has improved.
 Found 1 outliers among 100 measurements (1.00%)
   1 (1.00%) high mild
+
+     Running benches/benchmark.rs (target/release/deps/benchmark-89ebb62f4c2c57cd)
+Gnuplot not found, using plotters backend
+day08_part1             time:   [4.6774 ms 4.6806 ms 4.6842 ms]
+Found 10 outliers among 100 measurements (10.00%)
+  3 (3.00%) high mild
+  7 (7.00%) high severe
+
+day08_part2             time:   [25.305 ms 25.321 ms 25.340 ms]
+Found 15 outliers among 100 measurements (15.00%)
+  2 (2.00%) low mild
+  3 (3.00%) high mild
+  10 (10.00%) high severe
 
 
 ```
