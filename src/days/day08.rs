@@ -1,4 +1,3 @@
-#[allow(dead_code)] // not yet used in template
 const INPUT: &str = include_str!("../../inputs/input08.txt");
 use ordered_float::OrderedFloat;
 use std::collections::{BinaryHeap, HashSet};
@@ -99,7 +98,7 @@ pub fn part1() -> usize {
             }
         }
     }
-    sets.sort_unstable_by(|set1, set2| set2.len().cmp(&set1.len()));
+    sets.sort_unstable_by_key(|set2| std::cmp::Reverse(set2.len()));
     sets[0].len() * sets[1].len() * sets[2].len()
 }
 
