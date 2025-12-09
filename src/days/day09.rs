@@ -1,14 +1,9 @@
-use std::{
-    cmp::{max, min},
-    collections::HashSet,
-};
-
-use itertools::Itertools;
+use std::cmp::{max, min};
 
 const INPUT: &str = include_str!("../../inputs/input09.txt");
 
 pub fn part1() -> i64 {
-    // we can later optimize it by
+    // we optimize it by
     // ordering all tiles by the distance to the farthest corner in the square opened by minx, maxx, miny, maxy
     // then take the one tile at a time (with max distance)
     // if its distance to farthest corner is less than the diagonal of the already found largest square, break the loop
@@ -129,31 +124,55 @@ pub fn part2() -> i64 {
             // if all 4 corners are in polygon
             if point_is_inside(&(a.0, b.1), &vertices) && point_is_inside(&(b.0, a.1), &vertices) {
                 // println!(" all 4 corners are inside");
-                // if every point of all 4 rectangle vertices are in polygon
+                // if no side of the rectangle intersects with polygon edges
                 let xmin = min(a.0, b.0);
                 let xmax = max(a.0, b.0);
                 let ymin = min(a.1, b.1);
                 let ymax = max(a.1, b.1);
-                for x in xmin + 1..xmax {
-                    if !point_is_inside(&(x, ymin), &vertices) {
-                        // println!(" but not point &(x, ymin) {:?}", (x, ymin));
-                        continue 'point2;
+
+                for vertex in &vertices {
+                    let minxv = min(vertex.0.0, vertex.1.0);
+                    let maxxv = max(vertex.0.0, vertex.1.0);
+                    let minyv = min(vertex.0.1, vertex.1.1);
+                    let maxyv = max(vertex.0.1, vertex.1.1);
+                    // left side // (xmin, ymin) -> (xmin, ymax)
+                    // only interested in horizontal vertices
+                    if vertex.0.0 != vertex.1.0 {
+                        if xmin > minxv && xmin < maxxv && ymin < vertex.0.1 && ymax > vertex.0.1 {
+                            // println!(
+                            //     " left side of rectangle {:?}{:?} intercepts vertex {:?}",
+                            //     a, b, vertex
+                            // );
+                            continue 'point2;
+                        }
+                        // right side // (xmax, ymin) -> (xmax, ymax)
+                        if xmax > minxv && xmax < maxxv && ymin < vertex.0.1 && ymax > vertex.0.1 {
+                            // println!(
+                            //     " right side of rectangle {:?}{:?} intercepts vertex {:?}",
+                            //     a, b, vertex
+                            // );
+                            continue 'point2;
+                        }
                     }
-                    if !point_is_inside(&(x, ymax), &vertices) {
-                        // println!(" but not point &(x, ymax) {:?}", (x, ymax));
-                        continue 'point2;
+                    // only interested in horizontal vertices
+                    if vertex.0.1 != vertex.1.1 {
+                        if ymin > minyv && ymin < maxyv && xmin < vertex.0.0 && xmax > vertex.0.0 {
+                            // println!(
+                            //     " bottom side of rectangle {:?}{:?} intercepts vertex {:?}",
+                            //     a, b, vertex
+                            // );
+                            continue 'point2;
+                        }
+                        if ymax > minyv && ymax < maxyv && xmin < vertex.0.0 && xmax > vertex.0.0 {
+                            // println!(
+                            //     " top side of rectangle {:?}{:?} intercepts vertex {:?}",
+                            //     a, b, vertex
+                            // );
+                            continue 'point2;
+                        }
                     }
                 }
-                for y in ymin + 1..ymax {
-                    if !point_is_inside(&(xmin, y), &vertices) {
-                        // println!(" but not point &(xmin, y){:?}", (xmin, y));
-                        continue 'point2;
-                    }
-                    if !point_is_inside(&(xmax, y), &vertices) {
-                        // println!(" but not point &(xmax, y){:?}", (xmax, y));
-                        continue 'point2;
-                    }
-                }
+
                 // now complete rectangle is inside polygon and we have a new max
                 maxarea = area;
             } else {
