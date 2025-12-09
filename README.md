@@ -19,8 +19,8 @@ cargo bench day01
 
 ## Benchmarks
 
-| day  |  part1 |  part2 |
-| :----|-------:|-------:|
+| day  |   part1 |   part2 |
+| :----|--------:|--------:|
 | day01|   98 µs |   99 µs |
 | day02|    3 µs | 1877 µs |
 | day03|   31 µs |   68 µs |

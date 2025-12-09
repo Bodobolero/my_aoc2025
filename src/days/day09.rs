@@ -103,7 +103,8 @@ pub fn part2() -> i64 {
 
     // for each rectangle (unordered combination of pairs):
     // check if all 4 corners (2 remaining only) are inside the polygon built by the point connections
-    // then check if all points on the vertices of the rectangle are inside the polygon
+    // then check if all sides of the rectangle do not intersect with any of the polygon edges
+    // For checking if a point is inside polygon:
     // Point in Polygon ray-casting algorithm? Or is there a simpler approach because our polygon's vertices all
     // have 90 degree angles?
 
