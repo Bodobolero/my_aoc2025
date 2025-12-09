@@ -1,18 +1,19 @@
-use std::cmp::{max, min};
+use std::{
+    cmp::{max, min},
+    collections::HashSet,
+};
 
 use itertools::Itertools;
 
 const INPUT: &str = include_str!("../../inputs/input09.txt");
 
 pub fn part1() -> i64 {
-    // brute force solution
-    // @TODO
     // we can later optimize it by
     // ordering all tiles by the distance to the farthest corner in the square opened by minx, maxx, miny, maxy
     // then take the one tile at a time (with max distance)
     // if its distance to farthest corner is less than the diagonal of the already found largest square, break the loop
     // if not compare the new tile's distance to all tiles in the set already taken and find the max square
-    INPUT
+    let tiles: Vec<(i64, i64)> = INPUT
         .lines()
         .map(|line| {
             let mut s = line.split(',');
@@ -21,10 +22,37 @@ pub fn part1() -> i64 {
                 s.next().unwrap().parse::<i64>().unwrap(),
             )
         })
-        .tuple_combinations::<(_, _)>()
-        .map(|(a, b)| ((a.0 - b.0).abs() + 1) * ((a.1 - b.1).abs() + 1))
-        .max()
-        .unwrap()
+        .collect();
+    let xmin = tiles.iter().map(|t| t.0).min().unwrap();
+    let xmax = tiles.iter().map(|t| t.0).max().unwrap();
+    let ymin = tiles.iter().map(|t| t.1).min().unwrap();
+    let ymax = tiles.iter().map(|t| t.1).max().unwrap();
+    let mut sorted_tiles: Vec<(&(i64, i64), i64)> = tiles
+        .iter()
+        .map(|t| {
+            (
+                t,
+                (max(t.0 - xmin + 1, xmax - t.0 + 1) * max(t.1 - ymin + 1, ymax - t.1 + 1)),
+            )
+        })
+        .collect();
+    sorted_tiles.sort_unstable_by_key(|k| std::cmp::Reverse(k.1));
+    let mut maxarea = 0i64;
+    for i in 1..sorted_tiles.len() {
+        if sorted_tiles[i].1 <= maxarea {
+            break;
+        }
+        for j in 0..i {
+            let a = sorted_tiles[i].0;
+            let b = sorted_tiles[j].0;
+            let area = ((a.0 - b.0).abs() + 1) * ((a.1 - b.1).abs() + 1);
+            if area > maxarea {
+                maxarea = area;
+            }
+        }
+    }
+
+    maxarea
 }
 
 pub fn point_is_on_vertex(point: &(i64, i64), vertex: &(&(i64, i64), &(i64, i64))) -> bool {
