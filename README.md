@@ -30,7 +30,7 @@ cargo bench day01
 | day07|   34 µs |   61 µs | 
 | day08| 4681 µs |25321 µs |
 | day09|  117 µs |65143 µs |
-| day10|  xxx µs |  xxx µs |
+| day10| 1649 µs |13636 µs |
 | day11|  xxx µs |  xxx µs |
 | day12|  xxx µs |  xxx µs |
 
@@ -190,6 +190,21 @@ Found 17 outliers among 100 measurements (17.00%)
   2 (2.00%) low mild
   4 (4.00%) high mild
   7 (7.00%) high severe
+
+     Running benches/benchmark.rs (target/release/deps/benchmark-9899a99d0cf253a8)
+Gnuplot not found, using plotters backend
+Benchmarking day10_part1: Warming up for 3.0000 s
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 8.3s, enable flat sampling, or reduce sample count to 50.
+day10_part1             time:   [1.6468 ms 1.6494 ms 1.6524 ms]
+Found 10 outliers among 100 measurements (10.00%)
+  1 (1.00%) low severe
+  7 (7.00%) high mild
+  2 (2.00%) high severe
+
+day10_part2             time:   [13.556 ms 13.636 ms 13.762 ms]
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
 
 
 ```

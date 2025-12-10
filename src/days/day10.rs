@@ -64,7 +64,7 @@ pub fn part1() -> usize {
         .sum()
 }
 
-pub fn part2() -> usize {
+pub fn part2() -> i64 {
     //[#.#.] (0,2) (2) (2,3) (1,3) {18,16,34,25}
     // we represent the joltage as a vector of integers where each parsed number represents one vector element
     // we represent the buttons as vectors of decimal integers of same length as the joltage that have a 1 in the element positio of the given numbers
@@ -80,20 +80,20 @@ pub fn part2() -> usize {
             let pos2 = l.find('{').unwrap();
             let buttons = &l[(pos1 + 2)..(pos2 - 1)];
             let joltage = &l[pos2 + 1..l.len() - 1];
-            print!(
-                "machine with joltage -{}- and buttons -{}-",
-                joltage, buttons
-            );
+            // print!(
+            //     "machine with joltage -{}- and buttons -{}-",
+            //     joltage, buttons
+            // );
             let target = joltage
                 .split(',')
-                .map(|s| s.parse::<u64>().unwrap())
+                .map(|s| s.parse::<i64>().unwrap())
                 .collect::<Vec<_>>();
             let veclen = target.len();
-            print!(" target {:?} ", target);
+            // print!(" target {:?} ", target);
             let buttons = buttons
                 .split_ascii_whitespace()
                 .map(|b| {
-                    let mut button = vec![0u64; veclen];
+                    let mut button = vec![0i64; veclen];
                     for elem in b[1..b.len() - 1]
                         .split(',')
                         .map(|s| s.parse::<usize>().unwrap())
@@ -107,9 +107,9 @@ pub fn part2() -> usize {
             (target, buttons)
         })
         .map(|(target, buttons)| {
-            let solution = find_minimal_presses(&target, &buttons);
-            println!(" found solution with {} presses", solution);
-            solution
+            let solution = minimal_nonneg_integer_solution(&buttons, &target).unwrap();
+            //println!("  solution: {:?}", solution);
+            solution.iter().sum::<i64>()
         })
         .sum()
 }
@@ -120,6 +120,7 @@ fn add(a: &mut [u64], b: &[u64], mult: u64) {
     }
 }
 
+// this solution is too slow, we need to find a solution that systematically solves the integer linear problem (ILP)
 pub fn find_minimal_presses(target: &[u64], buttons: &[Vec<u64>]) -> usize {
     // find vector of max presses individually for each button
     let mut max_presses = vec![0; buttons.len()];
@@ -159,6 +160,57 @@ pub fn find_minimal_presses(target: &[u64], buttons: &[Vec<u64>]) -> usize {
         .unwrap()
 }
 
+// using good_lp solver for integer linear programming
+use good_lp::{
+    Expression,
+    Solution,
+    SolverModel,
+    constraint,
+    solvers::microlp::microlp, // <-- add this
+    variable,
+    variables,
+};
+
+fn minimal_nonneg_integer_solution(basis: &[Vec<i64>], rhs: &[i64]) -> Option<Vec<i64>> {
+    let m = rhs.len();
+    let n = basis.len();
+
+    if n == 0 || m == 0 {
+        return None;
+    }
+    if basis.iter().any(|v| v.len() != m) {
+        return None;
+    }
+
+    let mut vars = variables!();
+    let xs: Vec<_> = (0..n)
+        .map(|_| vars.add(variable().integer().min(0)))
+        .collect();
+
+    let objective: Expression = xs.iter().cloned().sum();
+
+    // use microlp instead of default_solver / CBC
+    let mut problem = vars.minimise(objective).using(microlp);
+
+    for i in 0..m {
+        let expr: Expression = xs
+            .iter()
+            .enumerate()
+            .map(|(j, xj)| (basis[j][i] as f64) * (*xj))
+            .sum();
+        problem = problem.with(constraint!(expr == rhs[i] as f64));
+    }
+
+    let solution = problem.solve().ok()?;
+
+    let result: Vec<i64> = xs
+        .iter()
+        .map(|xj| solution.value(*xj).round() as i64)
+        .collect();
+
+    Some(result)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -170,6 +222,6 @@ mod tests {
 
     #[test]
     fn part2_test() {
-        assert_eq!(part2(), 34);
+        assert_eq!(part2(), 17820);
     }
 }
