@@ -174,6 +174,11 @@ use good_lp::{
     variables,
 };
 
+// we solve a linear equation
+// x1 * button1 + x2 * button2 + ... * xn * button n = joltage
+// where buttons and joltage are vectors of length m
+// with the constraints that xi are in Z (integers >=0)
+// and we minimize the sum of xi
 fn minimal_nonneg_integer_solution(basis: &[Vec<i64>], rhs: &[i64]) -> Option<Vec<i64>> {
     let m = rhs.len();
     let n = basis.len();
@@ -186,15 +191,19 @@ fn minimal_nonneg_integer_solution(basis: &[Vec<i64>], rhs: &[i64]) -> Option<Ve
     }
 
     let mut vars = variables!();
+
+    // create the variables x0, x1, ... x(n-1)
     let xs: Vec<_> = (0..n)
+        // with their constraint to be integers >=0
         .map(|_| vars.add(variable().integer().min(0)))
         .collect();
 
+    // our objective is to minimize the sum of all xi
     let objective: Expression = xs.iter().cloned().sum();
-
     // use microlp instead of default_solver / CBC
     let mut problem = vars.minimise(objective).using(microlp);
 
+    // for all vector elements add the constraint from the linear equations given by day10 part2 task:
     for i in 0..m {
         let expr: Expression = xs
             .iter()
@@ -204,8 +213,11 @@ fn minimal_nonneg_integer_solution(basis: &[Vec<i64>], rhs: &[i64]) -> Option<Ve
         problem = problem.with(constraint!(expr == rhs[i] as f64));
     }
 
+    // now let the solver solve the linear equations and apply the objective to each solution to find a single best solution
+    // if the puzzle is not well-formulated it could be that the solver returns an Err instead of ok!
     let solution = problem.solve().ok()?;
 
+    // extract the xi from the solvers result
     let result: Vec<i64> = xs
         .iter()
         .map(|xj| solution.value(*xj).round() as i64)
