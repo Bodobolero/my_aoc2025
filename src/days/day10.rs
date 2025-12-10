@@ -73,6 +73,7 @@ pub fn part2() -> i64 {
     // basically the algorithm requires solving a linear equation but the solution vector must only contain positive integers
     // s0 * button0 + s1 * button1 + ... + sn * buttonn = joltage
     // where [s0, s1, ..., sn] is the solution vector with si being the number of presses of button i
+    // we also need to find the minimum of all possible solutions
     INPUT
         .lines()
         .map(|l| {
@@ -120,7 +121,9 @@ fn add(a: &mut [u64], b: &[u64], mult: u64) {
     }
 }
 
-// this solution is too slow, we need to find a solution that systematically solves the integer linear problem (ILP)
+// this solution is too slow,
+// even though we do some boundary optimizations with minpresses, maxtotal and max_presses to reduce the search space
+// we need to find a solution that systematically solves the integer linear problem (ILP)
 pub fn find_minimal_presses(target: &[u64], buttons: &[Vec<u64>]) -> usize {
     // find vector of max presses individually for each button
     let mut max_presses = vec![0; buttons.len()];
