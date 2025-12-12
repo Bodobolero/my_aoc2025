@@ -32,7 +32,7 @@ cargo bench day01
 | day09|  117 µs |65143 µs |
 | day10| 1649 µs |13636 µs |
 | day11|  565 µs |  770 µs |
-| day12|  xxx µs |  xxx µs |
+| day12|  242 µs |     N/A |
 
 (Python day07 part2, same solution: 1941 microseconds = 32 times slower than Rust)
 
