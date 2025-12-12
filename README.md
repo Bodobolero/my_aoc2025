@@ -1,7 +1,7 @@
 # Solutions for Advent of code 2025
 
 This year I solved day 1-12.
-The total runtime for part1 and part2 of days 1-11 is xxx milliseconds.
+The total runtime for part1 and part2 of all days 1-12 added up is xxx milliseconds.
 
 ## How to use
 
@@ -27,7 +27,7 @@ cargo bench day01
 | day04|  145 µs | 1500 µs |
 | day05|  119 µs |   18 µs |
 | day06|  133 µs |   27 µs |
-| day07|   34 µs |   61 µs | 
+| day07|   34 µs |   61 µs |
 | day08| 4681 µs |25321 µs |
 | day09|  117 µs |65143 µs |
 | day10| 1649 µs |13636 µs |
