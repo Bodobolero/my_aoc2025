@@ -221,4 +221,18 @@ day11_part2             time:   [768.85 µs 769.86 µs 770.96 µs]
 Found 3 outliers among 100 measurements (3.00%)
   2 (2.00%) low mild
   1 (1.00%) high mild
+
+     Running benches/benchmark.rs (target/release/deps/benchmark-9899a99d0cf253a8)
+Gnuplot not found, using plotters backend
+day12_part1             time:   [241.51 µs 241.78 µs 242.05 µs]
+Found 4 outliers among 100 measurements (4.00%)
+  2 (2.00%) low mild
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+day12_part2             time:   [313.56 ps 313.84 ps 314.14 ps]
+Found 5 outliers among 100 measurements (5.00%)
+  1 (1.00%) high mild
+  4 (4.00%) high severe
+
 ```
