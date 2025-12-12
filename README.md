@@ -1,7 +1,12 @@
 # Solutions for Advent of code 2025
 
 This year I solved day 1-12.
-The total runtime for part1 and part2 of all days 1-12 added up is xxx milliseconds.
+The total runtime for part1 and part2 of all days 1-12 added up is 116 milliseconds (or 116 337 µs).
+
+The inputs I used to run the benchmarks are not part of this repository
+as this would violate the advent of code license terms.
+The inputs in this repository are those given in the
+examples available on the advent of code website.
 
 ## How to use
 
