@@ -3,34 +3,22 @@ use std::panic;
 #[allow(dead_code)] // not yet used in template
 const INPUT: &str = include_str!("../../inputs/input01.txt");
 
-pub fn part1() -> i32 {
-    let mut dial: i32 = 50;
-    let mut password: i32 = 0;
-    for (direction, clicks) in INPUT.lines().map(|line| {
-        let (direction, clicks) = line.split_at(1);
-        (direction, clicks.parse::<i32>().unwrap())
-    }) {
-        match direction {
-            "L" => {
-                dial -= clicks;
-                while dial < 0 {
-                    dial += 100;
-                }
-            }
-            "R" => {
-                dial += clicks;
-                while dial > 99 {
-                    dial -= 100;
-                }
-            }
-            _ => panic!("invalid direction"),
-        }
-        if dial == 0 {
-            password += 1;
-        };
-        // println!("The dial is rotated {} in direction {} to point at {}.",clicks, direction, dial );
-    }
-    password
+pub fn part1() -> usize {
+    let mut pos = 50;
+    INPUT
+        .lines()
+        .map(|line| {
+            let sign = if line.starts_with('L') { -1 } else { 1 };
+            let val = line[1..].parse::<i32>().unwrap();
+            pos += sign * val;
+            if pos < 0 {
+                pos += 100
+            };
+            pos %= 100;
+            pos
+        })
+        .filter(|pos| *pos == 0)
+        .count()
 }
 
 pub fn part2() -> i32 {
